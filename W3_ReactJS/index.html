@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+        <!-- React JS를 불러오기 위해 script에 react, react-dom 복붙 -->
+        <!-- React & React-dom 역할 -->
+            <!-- React = interactive UI 만들기 위한 library -->
+            <!-- React dom = React가 만든 element html body에 구현 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <!-- JSX = syntax of JavaScript; similar but much easier grammar -->
+    <script type="text/babel">
+        const root = document.getElementById("root");
+        function Title() {
+            return (
+                <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+                    Hello I'm a title
+                </h3>
+            );
+        }
+            
+        // ReactJS 방식 //
+        // const h3h3 = React.createElement(
+        //     "h3", 
+        //     { 
+        //         id: "title",
+        //         onMouseEnter: () => console.log("mouse enter"),
+        //     }, 
+        //     "Hello I'm a span"
+        // );
+
+        const Button = () => (
+            <button 
+                style={{
+                    backgroundColor: "tomato"
+                }}
+                onClick={() => console.log("im clicked")}
+            >
+                Click me
+            </button>
+        );
+
+        // ReactJS 방식 //
+        // const btnbtn = React.createElement(
+        //     "button", 
+        //     { 
+        //         onClick: () => console.log("im clicked"),
+        //         style: {
+        //             backgroundColor: "tomato",
+        //         },
+        //     }, 
+        //     "Click me"
+        // );
+
+        const Container = () => (
+            <div>
+                <Title /> 
+                <Button />
+            </div>
+        )
+        // 태그 쓰듯이 써서 element refer, 단 capitalized 안되면 HTML tag으로 인식
+
+        // ReactJS 방식 //
+        //const container = React.createElement("div", null, [Title, Button]);
+        // createElement( HTML tag name, property, content )
+            //  property에 event listener 생성할 수 있음 (VanillaJS에서는 click, ReactJS에서는 onClick)
+        
+            ReactDOM.render(<Container />, root); 
+        // render = show React element(container) on HTML(root)
+    </script>
+</html>
+
+<!-- 기존의 방식: HTML 만들고, 찾아서 가져오고, 업데이트 -->
+<!-- Using ReactJS: JavaScript로 만들면, ReactJS가 html로 번역해서 보여줌 -->
+    <!-- ==> ReactJS controls what's shown to user -->
+    <!-- 동일한 createElement의 property에 넣어도 id/style인지 eventlistener인지에 따라 console에 다르게 표시됨 -->

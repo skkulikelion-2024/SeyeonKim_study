@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@17.0.2/umd/prop-types.js"></script>
+    <script type="text/babel">
+        function Btn({text, onClick, fontSize = 14}) {
+            // console.log(props);   결과: 두 번의 Btn 함수 호출에 대해 각각 argument 받아와서 출력
+            // 중괄호로 argument 오브젝트를 바로 받아와도 되고, 인자로 props 넣어놓은 다음 button 정의부 내에서 {props.argument}로 받아와도 됨
+            console.log(text, "was rendered");
+            return (
+                <button
+                    onClick={onClick}
+                    style={{
+                        backgroundColor: "tomato",
+                        color: "white",
+                        padding: "10px 20px",
+                        border: 0,
+                        borderRadius: 10,
+                        fontSize
+                    }}
+                >   
+                    {text}
+                </button>
+            );
+        }
+        Btn.propTypes = {
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        };
+        const MemorizedBtn = React.memo(Btn);
+        // props이 변경되지 않는 두 번째 Btn이 다시 생성되지 않도록 '기억'하게 함
+        function App() {
+            const [value, setValue] = React.useState("Save Changes");
+            const changeValue = () => setValue("Revert Changes");
+            return (
+                <div>
+                    <MemorizedBtn text={value} onClick={changeValue} fontSize={18} /> 
+                    <MemorizedBtn text={16} fontSize={value} />
+                </div>
+                // argument 이름은 임의로 정할 수 있음
+                // 어느 종류의 변수든 생성 가능
+                    // 논리형 변수 하나 더 만들어서 Btn style에서 if else문 작성 가능 (fontSize: big ? 18 : 16)
+                    // 이벤트 리스너 함수 onClick -- html에서 Btn 태그로써 정의하지 않고 하나의 prop으로써 함수를 호출
+                // 단, html의 return에 자동으로 추가되지 않음. 내가 직접 props 호출해야 함
+            );
+        }
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</html>
